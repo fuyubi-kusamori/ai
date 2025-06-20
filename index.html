@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Services Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400;500;600;700&family=Noto+Sans+JP:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-bg: #fefefe;
+    --secondary-bg: #f8f9fa;
+    --accent-color: #7cb342;
+    --accent-secondary: #9ccc65;
+    --text-dark: #2c2c2c;
+    --text-muted: #6b7280;
+    --text-light: #ffffff;
+    --border-color: #e5e7eb;
+    --glass-bg: rgba(248, 249, 250, 0.8);
+    --glass-border: rgba(124, 179, 66, 0.15);
+    --glass-strong: rgba(248, 249, 250, 0.95);
+    --shadow-soft: 0 4px 24px rgba(124, 179, 66, 0.08);
+    --shadow-strong: 0 8px 40px rgba(124, 179, 66, 0.12);
+    --pastel-pink: #fce4ec;
+    --pastel-blue: #e3f2fd;
+    --pastel-purple: #f3e5f5;
+    --pastel-yellow: #fffde7;
+}
+
+body {
+    font-family: "Josefin Sans", "Noto Sans JP", sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-dark);
+    background: var(--primary-bg);
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* Enhanced Header */
+header {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: linear-gradient(135deg, #fefefe 0%, #f8f9fa 50%, #ffffff 100%);
+    overflow: hidden;
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(124, 179, 66, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(156, 204, 101, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(124, 179, 66, 0.08) 0%, transparent 50%);
+    animation: float 20s ease-in-out infinite;
+}
+
+/* Geometric Background Pattern */
+header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(30deg, transparent 24%, rgba(124, 179, 66, 0.02) 25%, rgba(124, 179, 66, 0.02) 26%, transparent 27%, transparent 74%, rgba(124, 179, 66, 0.02) 75%, rgba(124, 179, 66, 0.02) 76%, transparent 77%, transparent),
+        linear-gradient(60deg, transparent 24%, rgba(124, 179, 66, 0.02) 25%, rgba(124, 179, 66, 0.02) 26%, transparent 27%, transparent);
+    background-size: 80px 80px;
+    opacity: 0.4;
+    animation: geometricShift 40s linear infinite;
+}
+
+@keyframes geometricShift {
+    0% { transform: translateX(0) translateY(0); }
+    100% { transform: translateX(80px) translateY(80px); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(180deg); }
+}
+
+.hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* Enhanced Hero Title */
+.hero-title {
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-weight: 200;
+    letter-spacing: 0.15em;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, var(--text-dark), var(--accent-color), var(--text-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 4s ease-in-out infinite;
+    position: relative;
+}
+
+.hero-title::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent, rgba(124, 179, 66, 0.1), transparent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: titleGlow 5s ease-in-out infinite alternate;
+    z-index: -1;
+}
+
+@keyframes titleGlow {
+    0% { opacity: 0.3; transform: scale(1.01); }
+    100% { opacity: 0.6; transform: scale(1.03); }
+}
+
+@keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle::before,
+.hero-subtitle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+}
+
+.hero-subtitle::before {
+    left: -80px;
+}
+
+.hero-subtitle::after {
+    right: -80px;
+}
+
+.hero-description {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+/* Enhanced Navigation */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(254, 254, 254, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+}
+
+nav.scrolled {
+    background: rgba(254, 254, 254, 0.95);
+    box-shadow: var(--shadow-soft);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.nav-logo {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--accent-color);
+    letter-spacing: 0.1em;
+    position: relative;
+}
+
+.nav-logo::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.nav-logo:hover::after {
+    width: 100%;
+}
+
+.nav-links {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.nav-links a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -0.5rem;
+    width: 2px;
+    height: 0;
+    background: var(--accent-color);
+    transition: height 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+    transform: translateX(0.5rem);
+}
+
+.nav-links a:hover::before {
+    height: 100%;
+}
+
+/* Main Content */
+.main-content {
+    padding: 6rem 0;
+    position: relative;
+}
+
+.section {
+    margin-bottom: 8rem;
+    padding: 4rem 3rem;
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+    position: relative;
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    border-radius: 24px;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-soft);
+}
+
+.section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-color), var(--accent-secondary));
+    border-radius: 24px 24px 0 0;
+}
+
+.section:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-strong);
+}
+
+.section-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 200;
+    color: var(--text-dark);
+    margin-bottom: 3rem;
+    letter-spacing: 0.05em;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.section-title::before {
+    content: '';
+    width: 4px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--accent-color), var(--accent-secondary));
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.section-title::after {
+    content: '';
+    flex-grow: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent-color), transparent);
+}
+
+.section-content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.section-text {
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    text-align: justify;
+    position: relative;
+    padding-left: 2rem;
+}
+
+.section-text::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    width: 3px;
+    height: calc(100% - 1rem);
+    background: linear-gradient(to bottom, var(--accent-color), transparent);
+    border-radius: 2px;
+}
+
+/* AI Services Grid */
+.ai-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+    margin-top: 4rem;
+}
+
+.ai-service-card {
+    background: var(--glass-strong);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    box-shadow: var(--shadow-soft);
+}
+
+.ai-service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-strong);
+    border-color: rgba(124, 179, 66, 0.3);
+}
+
+.ai-service-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(124, 179, 66, 0.03), transparent, rgba(156, 204, 101, 0.02), transparent);
+    animation: rotate 20s linear infinite;
+    z-index: 0;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.ai-service-content {
+    position: relative;
+    z-index: 1;
+}
+
+.ai-service-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.ai-service-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    flex-shrink: 0;
+}
+
+/* Unique colors for each service */
+.ai-service-card:nth-child(1) .ai-service-icon { background: linear-gradient(135deg, #7cb342, #9ccc65); }
+.ai-service-card:nth-child(2) .ai-service-icon { background: linear-gradient(135deg, #ffc107, #fff176); }
+.ai-service-card:nth-child(3) .ai-service-icon { background: linear-gradient(135deg, #2196f3, #64b5f6); }
+.ai-service-card:nth-child(4) .ai-service-icon { background: linear-gradient(135deg, #e91e63, #f06292); }
+.ai-service-card:nth-child(5) .ai-service-icon { background: linear-gradient(135deg, #9c27b0, #ba68c8); }
+.ai-service-card:nth-child(6) .ai-service-icon { background: linear-gradient(135deg, #ff5722, #ff8a65); }
+.ai-service-card:nth-child(7) .ai-service-icon { background: linear-gradient(135deg, #795548, #a1887f); }
+.ai-service-card:nth-child(8) .ai-service-icon { background: linear-gradient(135deg, #3f51b5, #7986cb); }
+.ai-service-card:nth-child(9) .ai-service-icon { background: linear-gradient(135deg, #009688, #4db6ac); }
+.ai-service-card:nth-child(10) .ai-service-icon { background: linear-gradient(135deg, #607d8b, #90a4ae); }
+.ai-service-card:nth-child(11) .ai-service-icon { background: linear-gradient(135deg, #ff9800, #ffb74d); }
+
+.ai-service-title {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.ai-service-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.ai-service-title a:hover {
+    color: var(--accent-color);
+}
+
+.ai-service-description {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.ai-service-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.ai-service-tag {
+    background: rgba(124, 179, 66, 0.1);
+    color: var(--accent-color);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    border: 1px solid rgba(124, 179, 66, 0.2);
+    transition: all 0.3s ease;
+}
+
+.ai-service-tag:hover {
+    background: rgba(124, 179, 66, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Information Literacy Section */
+.literacy-section {
+    background: linear-gradient(135deg, #f3e5f5, #e8f5e8);
+    border: 2px solid rgba(124, 179, 66, 0.2);
+    border-radius: 24px;
+    padding: 3rem;
+    margin-top: 4rem;
+}
+
+.literacy-title {
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--text-dark);
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+}
+
+.literacy-title::before {
+    content: '⚠️';
+    position: absolute;
+    left: -3rem;
+    top: 0;
+    font-size: 1.5rem;
+}
+
+.literacy-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.literacy-list {
+    list-style: none;
+    padding: 0;
+}
+
+.literacy-list li {
+    background: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--accent-color);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.literacy-list li:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-soft);
+}
+
+.literacy-list li::before {
+    content: counter(literacy-counter);
+    counter-increment: literacy-counter;
+    position: absolute;
+    left: -20px;
+    top: 1.5rem;
+    width: 30px;
+    height: 30px;
+    background: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.literacy-content {
+    counter-reset: literacy-counter;
+}
+
+/* Enhanced Footer */
+footer {
+    text-align: center;
+    padding: 4rem 0;
+    border-top: 1px solid var(--border-color);
+    margin-top: 6rem;
+    background: var(--secondary-bg);
+    position: relative;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+}
+
+.footer-text {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        letter-spacing: 0.1em;
+    }
+
+    .hero-subtitle::before,
+    .hero-subtitle::after {
+        width: 30px;
+    }
+
+    .hero-subtitle::before {
+        left: -40px;
+    }
+
+    .hero-subtitle::after {
+        right: -40px;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .section {
+        margin-bottom: 4rem;
+        padding: 2.5rem 2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .ai-services-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .ai-service-card {
+        padding: 2rem;
+    }
+
+    .literacy-section {
+        padding: 2rem;
+    }
+
+    .literacy-title::before {
+        position: relative;
+        left: 0;
+        margin-right: 0.5rem;
+    }
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--secondary-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, var(--accent-color), var(--accent-secondary));
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, var(--accent-secondary), var(--accent-color));
+}
+
+/* Backdrop blur support */
+@supports not (backdrop-filter: blur(20px)) {
+    .section,
+    .ai-service-card,
+    nav {
+        background: rgba(248, 249, 250, 0.95);
+    }
+}
+</style>
+</head>
+<body>
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">AI Services Guide</div>
+            <ul class="nav-links">
+                <li><a href="#intro">Introduction</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#literacy">情報リテラシー</a></li>
+                <li><a href="#conclusion">Conclusion</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <div class="hero-content">
+            <h1 class="hero-title" data-text="AI Services">AI Services</h1>
+            <p class="hero-subtitle">Modern Tools for Learning</p>
+            <p class="hero-description">探求学習を支援する最新のAIサービスをご紹介します。これらのツールを活用して、より効果的で創造的な学習体験を実現しましょう。</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <section class="section" id="intro">
+                <h2 class="section-title">はじめに</h2>
+                <div class="section-content">
+                    <p class="section-text">現代の教育現場において、AI技術は学習を支援する強力なツールとして注目されています。これらのサービスは、情報収集、文章作成、言語翻訳、デザイン制作など、様々な分野で学習者の可能性を広げます。本ページでは、高校生の探求学習に特に有用な11のAIサービスを厳選し、それぞれの特徴と活用方法をご紹介します。</p>
+                </div>
+            </section>
+
+            <section class="section" id="services">
+                <h2 class="section-title">AIサービス紹介</h2>
+                <div class="section-content">
+                    <div class="ai-services-grid">
+                        <div class="ai-service-card">
+                            <div class="ai-service-content">
+                                <div class="ai-service-header">
+                                    <div class="ai-service-icon">C</div>
+                                    <h3 class="ai-service-title">
+                                        <a href="https://chat.openai.com/" target="_blank">ChatGPT</a>
+                                    </h3>
+                                </div>
+                                <p class="ai-service-description">
+                                    OpenAI が開発した対話型AIアシスタント。自然な会話を通じて質問に答え、文章作成、アイデア出し、問題解決のサポートを提供します。探求学習における調査や考察の相談相手として最適です。
+                                </p>
+                                <div class="ai-service-features">
+                                    <span class="ai-service-tag">対話型AI</span>
+                                    <span class="ai-service-tag">文章作成</span>
+                                    <span class="ai-service-tag">問題解決</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ai-service-card">
+                            <div class="ai-service-content">
+                                <div class="ai-service-header">
+                                    <div class="ai-service-icon">C</div>
+                                    <h3 class="ai-service-title">
+                                        <a href="https://claude.ai/" target="_blank">Claude</a>
+                                    </h3>
+                                </div>
+                                <p class="ai-service-description">
+                                    Anthropic が開発した高性能なAIアシスタント。長文の読解や複雑な分析に優れ、学術的な内容にも対応可能です。研究論文の要約や詳細な調査レポートの作成において威力を発揮します。
+                                </p>
+                                <div class="ai-service-features">
+                                    <span class="ai-service-tag">長文処理</span>
+                                    <span class="ai-service-tag">学術支援</span>
+                                    <span class="ai-service-tag">分析</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ai-service-card">
+                            <div class="ai-service-content">
+                                <div class="ai-service-header">
+                                    <div class="ai-service-icon">C</div>
+                                    <h3 class="ai-service-title">
+                                        <a href="https://copilot.microsoft.com/" target="_blank">Copilot</a>
+                                    </h3>
+                                </div>
+                                <p class="ai-service-description">
+                                    Microsoft が提供するAI搭載アシスタント。リアルタイムのWeb検索機能を活用し、最新の情報を取得できます。プログラミングから日常的な質問まで幅広くサポートする多機能ツールです。
+                                </p>
+                                <div class="ai-service-features">
+                                    <span class="ai-service-tag">Web検索</span>
+                                    <span class="ai-service-tag">プログラミング</span>
+                                    <span class="ai-service-tag">多機能</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ai-service-card">
+                            <div class="ai-service-content">
+                                <div class="ai-service-header">
+                                    <div class="ai-service-icon">G</div>
+                                    <h3 class="ai-service-title">
+                                        <a href="https://gemini.google.com/" target="_blank">Gemini</a>
+                                    </h3>
+                                </div>
+                                <p class="ai-service-description">
+                                    Google が開発した次世代AIモデル。テキスト、画像、音声など複数のメディアを同時に処理可能です。マルチモーダル機能により、視覚的な資料の分析や説明にも対応します。
+                                </p>
+                                <div class="ai-service-features">
+                                    <span class="ai-service-tag">マルチモーダル</span>
+                                    <span class="ai-service-tag">画像分析</span>
+                                    <span class="ai-service-tag">統合AI</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ai-service-card">
+                            <div class="ai-service-content">
+                                <div class="ai-service-header">
+                                    <div class="ai-service-icon">G</div>
+                                    <h3 class="ai-service-title">
+                                        <a href="https://www.genspark.ai/" target="_blank">Genspark</a>
+                                    </h3>
+                                </div>
+                                <p class="ai-service-description">
+                                    特定のトピックに関する包括的なページを自動生成するAIサーチエンジン。複数の情報源から情報を収集し、構造化されたレポートを作成します。研究の初期段階で全体像を把握するのに最適です。
+                                </p>
+                                <div class="ai-service-features">
+                                    <span class="ai-service-tag">情報収集</span>
+                                    <span class="ai-service-tag">レポート生成</span>
+                                    <span class="ai-service-tag">構造化</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ai-service-card">
+                            <div class="ai-service-content">
+                                <div class="ai-service-header">
+                                    <div class="ai-service-icon">M</div>
+                                    <h3 class="ai-service-title">
+                                        <a href="https://www.manus.chat/" target="_blank">Manus</a>
+                                    </h3>
+                                </div>
+                                <p class="ai-service-description">
+                                    学術研究に特化したAIアシスタント。論文の作成、引用管理、研究データの分析をサポートします。探求学習において、より高度な学術的アプローチを取りたい場合に最適なツールです。
+                                </p>
+                                <div class="ai-service-features">
+                                    <span class="ai-service-tag">学術研究</span>
+                                    <span class="ai-service-tag">論文作成</span>
+                                    <span class="ai-service-tag">引用管理</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="ai-service-card">
+                            <div class="ai-service-content">
+                                <div class="ai-service-header">
+                                    <div class="ai-service-icon">D</div>
+                                    <h3 class="ai-service-title">
+                                        <a href="https://www.deepl.com/" target="_blank">DeepL</a>
+                                    </h3>
+                                </div>
+                                <p class="ai-service-description">
+                                    高精度な機械翻訳サービス。自然で流暢な翻訳により、海外の研究資料や文献を効率的に理解できます。多言語間の情報収集において、言語の壁を取り払う強力なツールです。
+                                </p>
+                                <div class="ai-service-features">
+                                    <span class="ai-service-tag">機械翻訳</span>
+                                    <span class="ai-service-tag">多言語対応</span>
+                                    <span class="ai-service-tag">高精度</span>
+                                </div>
+                            </div>
+                        </div>                        
+
+                        <div class="ai-service-card">
+                            <div class="ai-service-content">
+                                <div class="ai-service-header">
+                                    <div class="ai-service-icon">P</div>
+                                    <h3 class="ai-service-title">
+                                        <a href="https://www.perplexity.ai/" target="_blank">Perplexity</a>
+                                    </h3>
+                                </div>
+                                <p class="ai-service-description">
+                                    AIを活用した検索エンジン。質問に対して信頼性の高い情報源を参照し、包括的な回答を提供します。学術的な調査において、効率的な情報収集と検証を可能にします。
+                                </p>
+                                <div class="ai-service-features">
+                                    <span class="ai-service-tag">AI検索</span>
+                                    <span class="ai-service-tag">情報検証</span>
+                                    <span class="ai-service-tag">包括的回答</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ai-service-card">
+                            <div class="ai-service-content">
+                                <div class="ai-service-header">
+                                    <div class="ai-service-icon">C</div>
+                                    <h3 class="ai-service-title">
+                                        <a href="https://www.canva.com/" target="_blank">Canva</a>
+                                    </h3>
+                                </div>
+                                <p class="ai-service-description">
+                                    AI機能を搭載したグラフィックデザインツール。プレゼンテーション、ポスター、インフォグラフィックの作成を簡単に行えます。探求学習の成果発表において、視覚的に魅力的な資料を作成できます。
+                                </p>
+                                <div class="ai-service-features">
+                                    <span class="ai-service-tag">デザイン</span>
+                                    <span class="ai-service-tag">プレゼン</span>
+                                    <span class="ai-service-tag">ビジュアル</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ai-service-card">
+                            <div class="ai-service-content">
+                                <div class="ai-service-header">
+                                    <div class="ai-service-icon">G</div>
+                                    <h3 class="ai-service-title">
+                                        <a href="https://gamma.app/" target="_blank">Gamma</a>
+                                    </h3>
+                                </div>
+                                <p class="ai-service-description">
+                                    AIを活用したプレゼンテーション作成ツール。自然言語でのプロンプトから、美しいスライドデッキを自動生成します。探求学習の発表資料を効率的に作成し、内容に集中できる環境を提供します。
+                                </p>
+                                <div class="ai-service-features">
+                                    <span class="ai-service-tag">プレゼン作成</span>
+                                    <span class="ai-service-tag">自動生成</span>
+                                    <span class="ai-service-tag">効率化</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="literacy-section" id="literacy">
+                <h2 class="literacy-title">AIを活用する際の情報リテラシー</h2>
+                <div class="literacy-content">
+                    <p class="section-text">AIツールを学習に活用する際は、以下の点に注意し、情報リテラシーを向上させることが重要です。</p>
+                    <ol class="literacy-list">
+                        <li><strong>情報の信頼性を確認する</strong><br>
+                        AIが提供する情報は必ずしも正確ではありません。複数の情報源で事実確認を行い、信頼できる一次資料を参照することが大切です。</li>
+                        
+                        <li><strong>著作権を尊重する</strong><br>
+                        AIが生成したコンテンツでも、元となった情報に著作権が存在する場合があります。適切な引用と出典表記を心がけましょう。</li>
+                        
+                        <li><strong>批判的思考を維持する</strong><br>
+                        AIからの回答を鵜呑みにせず、常に「なぜそうなるのか」「他の視点はないか」と疑問を持ち続けることが重要です。</li>
+                        
+                        <li><strong>プライバシーに配慮する</strong><br>
+                        個人情報や機密情報をAIサービスに入力することは避け、データの取り扱いについて理解しておきましょう。</li>
+                        
+                        <li><strong>依存しすぎない</strong><br>
+                        AIは学習を支援するツールであり、自分で考える力や創造性を代替するものではありません。適度な距離感を保ちながら活用しましょう。</li>
+                        
+                        <li><strong>倫理的な使用を心がける</strong><br>
+                        AIを使って他人を欺いたり、不正行為に利用したりすることは避け、学習目的での健全な利用を心がけましょう。</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section class="section" id="conclusion">
+                <h2 class="section-title">おわりに</h2>
+                <div class="section-content">
+                    <p class="section-text">これらのAIサービスは、探求学習を豊かにする強力なツールです。しかし、最も重要なのは、これらのツールを使って何を学び、どのような価値を創造するかということです。AIを適切に活用しながら、批判的思考力と創造性を養い、未来の社会で活躍できる人材になることを目指しましょう。技術の進歩と共に、私たちの学習方法も進化していきます。常に新しい可能性に開かれた心で、学習の旅を続けていってください。</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-text">
+            &copy; 2025 AI Services Guide. Created for educational purposes.
+        </div>
+    </footer>
+</body>
+</html>
